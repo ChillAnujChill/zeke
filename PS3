@@ -1,0 +1,112 @@
+
+use CollegeDB
+
+db.createCollection("students")
+
+
+
+db.students.insertOne(
+{
+    student_id: 1,
+    name: "Anuj",
+    age: 20,
+    department: "Computer",
+    marks: 85
+}
+)
+
+
+
+db.students.insertMany(
+[
+    {
+        student_id: 2,
+        name: "Rahul",
+        age: 21,
+        department: "IT",
+        marks: 90
+    },
+
+    {
+        student_id: 3,
+        name: "Sneha",
+        age: 19,
+        department: "ENTC",
+        marks: 78
+    },
+
+    {
+        student_id: 4,
+        name: "Priya",
+        age: 20,
+        department: "Computer",
+        marks: 88
+    }
+]
+)
+
+
+
+db.students.find()
+
+
+db.students.find(
+{
+    department: "Computer"
+}
+)
+
+
+
+db.students.updateOne(
+{
+    student_id: 1
+},
+{
+    $set:
+    {
+        marks: 95
+    }
+}
+)
+
+
+db.students.updateMany(
+{
+    department: "Computer"
+},
+{
+    $set:
+    {
+        status: "Pass"
+    }
+}
+)
+
+
+
+db.students.deleteOne(
+{
+    student_id: 3
+}
+)
+
+
+db.students.deleteMany(
+{
+    marks: { $lt: 80 }
+}
+)
+
+db.students.find().sort(
+{
+    marks: -1
+}
+)
+
+
+db.students.countDocuments()
+
+db.students.drop()
+
+db.dropDatabase()
