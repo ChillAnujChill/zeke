@@ -1,0 +1,102 @@
+
+CREATE DATABASE CompanyDB;
+
+USE CompanyDB;
+
+CREATE TABLE Department
+(
+    DeptID INT PRIMARY KEY,
+    DeptName VARCHAR(50)
+);
+
+CREATE TABLE Employee
+(
+    EmpID INT PRIMARY KEY,
+    EmpName VARCHAR(50),
+    Salary INT,
+    DeptID INT,
+    FOREIGN KEY (DeptID)
+    REFERENCES Department(DeptID)
+);
+
+INSERT INTO Department VALUES
+(1,'HR'),
+(2,'IT'),
+(3,'Sales');
+
+
+INSERT INTO Employee VALUES
+(101,'Anuj',50000,1),
+(102,'Rahul',60000,2),
+(103,'Sneha',55000,2),
+(104,'Priya',45000,3),
+(105,'Amit',40000,NULL);
+
+
+
+SELECT E.EmpName, D.DeptName
+FROM Employee E
+INNER JOIN Department D
+ON E.DeptID = D.DeptID;
+
+
+
+SELECT E.EmpName, D.DeptName
+FROM Employee E
+LEFT JOIN Department D
+ON E.DeptID = D.DeptID;
+
+
+
+SELECT E.EmpName, D.DeptName
+FROM Employee E
+RIGHT JOIN Department D
+ON E.DeptID = D.DeptID;
+
+
+
+SELECT E.EmpName, D.DeptName
+FROM Employee E
+CROSS JOIN Department D;
+
+
+
+SELECT A.EmpName AS Employee1,
+       B.EmpName AS Employee2
+FROM Employee A, Employee B
+WHERE A.EmpID <> B.EmpID;
+
+
+
+SELECT EmpName, Salary
+FROM Employee
+WHERE Salary >
+(
+    SELECT AVG(Salary)
+    FROM Employee
+);
+
+
+
+SELECT EmpName
+FROM Employee
+WHERE DeptID IN
+(
+    SELECT DeptID
+    FROM Department
+    WHERE DeptName = 'IT'
+);
+
+
+
+CREATE VIEW Employee_View AS
+SELECT EmpName, Salary
+FROM Employee;
+
+
+
+SELECT * FROM Employee_View;
+
+
+
+DROP VIEW Employee_View;
